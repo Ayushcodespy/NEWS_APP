@@ -16,11 +16,12 @@ class HomePage extends GetView<HomeController> {
       AppStrings.travel
     ];
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.background,
 //--------------------  Drawer  -------------------------------
 
       drawer: const Drawer(),
       appBar: AppBar(
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             onPressed: () {},
@@ -34,41 +35,38 @@ class HomePage extends GetView<HomeController> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Container(
-                color: AppColors.white,
-                child: Row(
-                  children: List.generate(
-                      categoriesList.length,
-                      (index) => Column(
-                            children: [
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  categoriesList[index].capitalized,
-                                  style: TextStyle(
-                                      color: index ==
-                                              controller
-                                                  .currentSelectedCategoryIndex
-                                          ? AppColors.primaryButton
-                                          : AppColors.secondaryText),
-                                ),
+              child: Row(
+                children: List.generate(
+                    categoriesList.length,
+                    (index) => Column(
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                categoriesList[index].capitalized,
+                                style: TextStyle(
+                                    color: index ==
+                                            controller
+                                                .currentSelectedCategoryIndex
+                                        ? AppColors.primaryButton
+                                        : AppColors.secondaryText),
                               ),
-                              VxBox()
-                                  .size(30, 5)
-                                  .color(index ==
-                                          controller
-                                              .currentSelectedCategoryIndex
-                                      ? AppColors.primaryButton
-                                      : Colors.transparent)
-                                  .rounded
-                                  .make()
-                            ],
-                          )),
-                ),
+                            ),
+                            VxBox()
+                                .size(30, 5)
+                                .color(index ==
+                                        controller.currentSelectedCategoryIndex
+                                    ? AppColors.primaryButton
+                                    : Colors.transparent)
+                                .rounded
+                                .make()
+                          ],
+                        )),
               ),
             ),
             10.heightBox,
@@ -175,24 +173,113 @@ class HomePage extends GetView<HomeController> {
             Row(
               children: [
                 VxBox()
-                    .size(5, 20)
+                    .size(4, 25)
                     .color(AppColors.primaryButton)
                     .rounded
                     .make(),
                 10.widthBox,
                 Text(
-                  AppStrings.popularNews.allWordsCapitilize(),
+                  AppStrings.popularNews,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryText),
                 ),
                 const Spacer(),
                 TextButton(
-                    onPressed: () {},
-                    child: const Text(AppStrings.viewAll,
-                        style: TextStyle(color: AppColors.primaryText)),
+                  onPressed: () {},
+                  child: const Text(
+                    AppStrings.viewAll,
+                    style: TextStyle(color: AppColors.secondaryText),
+                  ),
                 ),
               ],
-            )
+            ),
+            10.heightBox,
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 20,
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.white
+                    ),
+                  clipBehavior: Clip.hardEdge,
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 12, vertical: 8),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                    "Hello developers this is Ayush creating a news app as project"),
+                                10.heightBox,
+                                VxBox(
+                                  child: const Text(
+                                    "Entertainment",
+                                    style: TextStyle(color: AppColors.white),
+                                  ),
+                                )
+                                    .padding(const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 6))
+                                    .color(AppColors.icon)
+                                    .roundedSM
+                                    .make(),
+                              ],
+                            ),
+                          ),
+                          5.widthBox,
+                          Expanded(
+                              child: VxBox().black.size(80, 80).roundedSM.make())
+                        ],
+                      ),
+                      10.heightBox,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.access_time,
+                                  size: 14, color: AppColors.secondaryText),
+                              5.widthBox,
+                              const Text(
+                                "20 April, 24",
+                                style: TextStyle(
+                                    fontSize: 12, color: AppColors.secondaryText),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.favorite,
+                                color: AppColors.white,
+                                size: 14,
+                              ),
+                              6.widthBox,
+                              const Text(
+                                "255",
+                                style: TextStyle(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
